@@ -1,17 +1,14 @@
 1.  Install nodejs
 
-
 2. node —version
-        npm init 
-	This will create a project with default settings including package.json
- 
+        npm init  (This will create a project with default settings including package.json)
 
 3. Install express :: npm install express 
     1. Needed for endpoint creation
     
 4. Install nodemond :: npm install nodemon
     1. Needed for auto restart of the node server for any changes in the code
-	 2. To use nodemon, update package.json:
+    2. To use nodemon, update package.json:
 		 "start": "nodemon Main.js"
 
 
@@ -32,7 +29,7 @@ module.exports = app;
 
 To run: npm start  ( This will start the server with nodemon since we defined the entry in package.jso)
 
-
+-------------------------
 To Connect with MongoDB:
 
 5. Install Mongoose 
