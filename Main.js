@@ -2,36 +2,29 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const Student = require('./model/Student');
+const studentRouter = require('./router/StudentRouter')(Student);
 
-mongoose.connect('mongodb://localhost:27017/studentdb',{ useNewUrlParser: true } )
+
+mongoose.connect('mongodb://localhost:27017/studentdb',
+    { useNewUrlParser: true ,
+      useUnifiedTopology: true 
+    } 
+    )
+mongoose.connection 
 .then(() => {
     console.log("Connected to MongoDB with the port 27017");
 })
-.catch(()=> {
-    console.log("Unable to connect to MongoDB"); 
+.catch((error)=> {
+    console.log(`Unable to connect to MongoDB :: ${error.message}`);  
 })
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false })); 
 
-app.use('/createStudent',(req,res) => {
-    const newStudent = new Student({
-        studentname: req.body.studentname,
-        studentage: req.body.studentage
-    });
-    newStudent.save();
-    res.status(200).json({
-        Status:'Success',
-        Message:'Inserted successfully into MongoDB'
-    });
-})
-
-app.get("/",(req,res,next) => {
-    res.json({name:'juju', age:8});
-});
+app.use('/api', studentRouter ); 
 
 app.listen(3001, () => {
     console.log("Running on port 3001");
 })
 
-module.exports = app;
+module.exports = app; 
